@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+   
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Stellar Admin</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="/vendors/simple-line-icons/css/simple-line-icons.css">
+    <link rel="stylesheet" href="/vendors/flag-icon-css/css/flag-icon.min.css">
+    <link rel="stylesheet" href="/vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="./vendors/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" href="./vendors/chartist/chartist.min.css">
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <!-- endinject -->
+    <!-- Layout styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- End layout styles -->
+    <link rel="shortcut icon" href="/images/favicon.png" />
+  </head>
+  <body>
+ 
+    <div class="container-scroller">
+      <!-- partial:partials/_navbar.html -->
+      <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+        <div class="navbar-brand-wrapper d-flex align-items-center">
+         
+        </div>
+        <div class="navbar-menu-wrapper d-flex align-items-center flex-grow-1">
+          <h5 class="mb-0 font-weight-medium d-none d-lg-flex">dashboard!</h5>
+          <ul class="navbar-nav navbar-nav-right ml-auto">
+            
+            
+          </ul>
+          <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+            <span class="icon-menu"></span>
+          </button>
+        </div>
+      </nav>
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_sidebar.html -->
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+          <ul class="nav">
+            <li class="nav-item nav-profile">
+              <a href="#" class="nav-link">
+              
+               
+              
+              </a>
+            </li>
+            <li class="nav-item nav-category">
+              <span class="nav-link">Dashboard</span>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" th:href="@{/home}">
+                <span class="menu-title">Dashboard</span>
+                <i class="icon-screen-desktop menu-icon"></i>
+              </a>
+            </li>
+            <li class="nav-item nav-category"><span class="nav-link">UI Elements</span></li>
+           
+            <li class="nav-item">
+              <a class="nav-link"  th:href="@{/provider/list}">
+                <span class="menu-title" >Provider</span>
+                <i class="icon-globe menu-icon"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" th:href="@{/article/list}">
+                <span class="menu-title">Articles</span>
+                <i class="icon-book-open menu-icon"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" th:href="@{/accounts/list}">
+                <span class="menu-title">Users</span>
+                <i class="icon-chart menu-icon"></i>
+              </a>
+            </li>
+           
+       
+            
+          
+          </ul>
+        </nav>
+        <!-- partial -->
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="row purchace-popup">
+              <div class="col-12 stretch-card grid-margin">
+               
+              </div>
+            </div>
+            
+            
+
+
+
+                        
+            <div class="row">
+              <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                  
+                  <h2 class="card-title">List User</h4>
+
+                
+                <div class="card-body">
+				
+				<div th:switch="${users}" class="container my-5">
+					
+					<div class="col-md-10">
+						<h2 th:case="null">No Role yet!</h2>
+						<div th:case="*">
+						
+						<h2>Nombre total des Users= <span th:text="${nbr}">10</span></h2>
+							<table class="table table-hover table-dark">
+								<thead>
+									<tr>
+										<th><a>ID</a></th>
+										<th><a>Name</a></th>
+										<th><a>Email</a></th>
+										<th><a>Role</a></th>
+										<th><a>Update Role</a></th>
+										<th><a>Statut</a></th>
+										<th><a>Activer</a></th>
+										<th><a>Désactiver</a></th>
+										
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="user : ${users}">
+										<td th:text="${user.id}"></td>
+										<td th:text="${user.name}"></td>
+										<td th:text="${user.email}"></td>
+										<td>
+										  <ul>
+										   <li th:each="r : ${user.roles}" th:text="${r.role}"></li>
+										  </ul>
+										</td>
+										
+										<td>
+										<form method="post" th:action="@{/accounts/updateRole}">
+											<select name="newrole" class="form-control">
+												<option value="USER">USER</option>
+												<option value="ADMIN">ADMIN</option>
+												<option value="SUPERADMIN">SUPERADMIN</option>
+											</select>
+											<br/>
+										<input type="hidden" name="id" th:value="${user.id}" th:attr="name='id'"/>
+											<input class="btn btn-primary" type="submit" value="Update role"/>
+										</form>
+										</td>
+											
+										
+										
+										
+										
+										<td th:text="${user.active}"></td>
+										
+										<td><a th:href="@{/accounts/enable/{id} (id=${user.id})}">Activer</a></td>
+										<td><a th:href="@{/accounts/disable/{id} (id=${user.id})}">Désactiver</a></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
+					</div>
+				</div>
+                    
+                   
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- content-wrapper ends -->
+          <!-- partial:partials/_footer.html -->
+          <footer class="footer">
+            <div class="d-sm-flex justify-content-center justify-content-sm-between">
+              <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © ProjULT.com 2022</span>
+             
+            </div>
+          </footer>
+          <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <script src="vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <script src="./vendors/chart.js/Chart.min.js"></script>
+    <script src="./vendors/moment/moment.min.js"></script>
+    <script src="./vendors/daterangepicker/daterangepicker.js"></script>
+    <script src="./vendors/chartist/chartist.min.js"></script>
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="js/off-canvas.js"></script>
+    <script src="js/misc.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page -->
+    <script src="./js/dashboard.js"></script>
+    <!-- End custom js for this page -->
+    
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+						
